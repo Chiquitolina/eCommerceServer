@@ -8,9 +8,14 @@ const PORT = 3000
 
 app.use(cors());
 app.use(express.json());
-app.use(morgan('dev'))
 app.use(router)
+app.use(express.static('src/public'));
+
 
 app.listen(PORT, () => {
-console.log('Escuchando el puerto 3000')
+    console.log('Escuchando el puerto 3000')
+    return {
+    status: 200,
+    }
 })
+
