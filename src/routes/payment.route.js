@@ -4,9 +4,9 @@ import { createOrder, receiveWebhook } from "../controllers/payment.controller.j
 const router = Router()
 
 router.get('/', (req, res) => {
-    res.send('¡Hola!');
-  });
-  
+    res.send('bro!');
+});
+
 router.post('/create-order', createOrder)
 
 router.post('/failure', (req, res) => {console.log('failure')})
