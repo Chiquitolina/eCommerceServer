@@ -1,20 +1,26 @@
 import { Router } from "express";
-import { createOrder, receiveWebhook } from "../controllers/payment.controller.js";
+import {
+  createOrder,
+  getProducts,
+  healthCheck,
+} from "../controllers/payment.controller.js";
 
-const router = Router()
+const router = Router();
 
-router.get('/', (req, res) => {
-    res.send('bro!');
+router.post("/create-order", createOrder);
+
+router.get("/health-check", healthCheck);
+
+router.post("/failure", (req, res) => {
+  console.log("failure");
 });
 
-router.post('/create-order', createOrder)
+router.post("/success", (req, res) => {
+  console.log("success");
+});
 
-router.post('/failure', (req, res) => {console.log('failure')})
-
-router.post('/success', (req, res) => {console.log('success')})
-
-router.post('/pending', (req, res) => {console.log('pending')})
-
-router.post('/web-hook', receiveWebhook)
+router.post("/pending", (req, res) => {
+  console.log("pending");
+});
 
 export default router;
