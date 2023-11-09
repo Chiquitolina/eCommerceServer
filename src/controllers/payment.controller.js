@@ -1,4 +1,6 @@
 import mercadopago from 'mercadopago'
+import dotenv from 'dotenv'
+dotenv.config()
 
 export const createOrder = async (req, res) => {
 
@@ -15,7 +17,7 @@ export const createOrder = async (req, res) => {
     });
     
     mercadopago.configure({
-        access_token: "APP_USR-7164111176476079-103013-c07b7b3052b41805a443030050951190-1105995931",
+        access_token: process.env.MP_ACCESS_TOKEN,
     })
     
     const result = await mercadopago.preferences.create({
