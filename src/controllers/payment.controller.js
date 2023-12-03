@@ -37,6 +37,10 @@ export const createOrder = async (req, res) => {
     res.json({ message: result.body.init_point});
 }
 
+export const healthCheck = async (req, res) => {
+    res.status(200).send("OK");
+}
+
 export const receiveWebhook = async (req, res) => {
     const payment = req.query
 

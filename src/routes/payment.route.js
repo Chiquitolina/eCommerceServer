@@ -1,9 +1,11 @@
 import { Router } from "express";
-import { createOrder, receiveWebhook } from "../controllers/payment.controller.js";
+import { createOrder, healthCheck, receiveWebhook } from "../controllers/payment.controller.js";
 
 const router = Router()
 
 router.post('/create-order', createOrder)
+
+router.get('/health-check', healthCheck)
 
 router.post('/failure', (req, res) => {console.log('failure')})
 
