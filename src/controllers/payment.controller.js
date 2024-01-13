@@ -50,7 +50,7 @@ export const getProducts = async (req, res) => {
     const json = JSON.parse(data);
     res.json(json);
   } catch (error) {
-    console.error("Hubo un error al leer el archivo:", error);
+    console.log("Hubo un error al leer el archivo:", error);
     res.status(500).send("Error interno del servidor");
   }
 };
