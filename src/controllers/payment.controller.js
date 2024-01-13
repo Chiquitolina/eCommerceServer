@@ -44,11 +44,22 @@ export const createOrder = async (req, res) => {
   }
 };
 
+export const getProducts = async (req, res) => {
+  try {
+    const data = await fs.readFile("src/data/products.json", "utf8");
+    const json = JSON.parse(data);
+    res.json(json);
+  } catch (error) {
+    console.error("Hubo un error al leer el archivo:", error);
+    res.status(500).send("Error interno del servidor");
+  }
+};
+
 export const healthCheck = async (req, res) => {
   res.status(200).send("OK");
 };
 
-export const receiveWebhook = async (req, res) => {
+/*export const receiveWebhook = async (req, res) => {
   const payment = req.query;
 
   if (payment.type === "payment") {
@@ -56,4 +67,4 @@ export const receiveWebhook = async (req, res) => {
     console.log(data);
   }
   res.sendStatus(204);
-};
+};*/
