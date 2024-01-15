@@ -51,9 +51,9 @@ export const createOrder = async (req, res) => {
 
 export const getProducts = async (req, res) => {
   try {
-    const data = await fs.readFile("src/data/products.json", "utf8");
+    const data = await fs.readFile("/home/noraExpress/src/data/products.json");
     const json = JSON.parse(data);
-    res.json(json);
+    res.status(200).json(json);
   } catch (error) {
     console.log("Hubo un error al leer el archivo:", error);
     res.status(500).send("Error interno del servidor");
