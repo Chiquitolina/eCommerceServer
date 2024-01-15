@@ -51,7 +51,7 @@ export const createOrder = async (req, res) => {
 
 export const getProducts = async (req, res) => {
   try {
-    const data = await fs.readFile("/home/noraExpress/src/data/products.json");
+    const data = await fs.readFile("src/data/products.json");
     const json = JSON.parse(data);
     res.status(200).json(json);
   } catch (error) {
