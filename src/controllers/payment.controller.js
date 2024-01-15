@@ -2,6 +2,12 @@ import mercadopago from "mercadopago";
 import dotenv from "dotenv";
 import fs from "fs/promises"; // Usar fs.promises para operaciones asíncronas con promesas
 
+import { fileURLToPath } from "url";
+import path from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 dotenv.config();
 
 export const createOrder = async (req, res) => {
@@ -51,7 +57,8 @@ export const createOrder = async (req, res) => {
 
 export const getProducts = async (req, res) => {
   try {
-    const data = await fs.readFile("src/data/products.json");
+    const productsPath = path.join(__dirname, "../data/products.json");
+    const data = await fs.readFile(productsPath, "utf8");
     const json = JSON.parse(data);
     res.status(200).json(json);
   } catch (error) {
