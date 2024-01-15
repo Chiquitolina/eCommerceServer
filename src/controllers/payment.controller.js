@@ -31,7 +31,6 @@ export const createOrder = async (req, res) => {
         failure: "http://localhost:3000/failure",
         pending: "http://localhost:3000/pending",
       },
-      notification_url: "https://379f-190-16-205-196.ngrok.io/web-hook",
     });
 
     console.log(result);
@@ -40,7 +39,13 @@ export const createOrder = async (req, res) => {
 
     res.json({ message: result.body.init_point });
   } catch (error) {
-    console.log("Error:", error);
+    console.log("Error en la creación de la orden:", error.message);
+    if (error.response) {
+      // Manejar errores específicos de la respuesta
+      console.log("Respuesta de error:", error.response);
+    }
+    // Envía una respuesta al cliente
+    res.status(500).send("Error interno del servidor: " + error.message);
   }
 };
 
