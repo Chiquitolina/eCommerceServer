@@ -14,7 +14,9 @@ export const createOrder = async (req, res) => {
   let data = req.body.items;
   let itemss = [];
 
-  data.forEach((element) => {
+  console.log(data);
+
+  /* data.forEach((element) => {
     let item = {
       title: element.product.name,
       quantity: element.cantidad,
@@ -52,7 +54,7 @@ export const createOrder = async (req, res) => {
     }
     // Envía una respuesta al cliente
     res.status(500).send("Error interno del servidor: " + error.message);
-  }
+  }*/
 };
 
 export const getProducts = async (req, res) => {
