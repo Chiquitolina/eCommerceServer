@@ -26,6 +26,8 @@ export const createOrder = async (req, res) => {
     itemss.push(item);
   });
 
+  console.log(itemss);
+
   try {
     mercadopago.configure({
       access_token:
