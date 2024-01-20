@@ -16,7 +16,7 @@ export const createOrder = async (req, res) => {
 
   console.log(data);
 
-  data.forEach((element) => {
+  /*data.forEach((element) => {
     let item = {
       title: element.name,
       quantity: element.cantidad,
@@ -25,15 +25,15 @@ export const createOrder = async (req, res) => {
     };
     console.log(item);
   });
-
-  /*  try {
+*/
+  try {
     mercadopago.configure({
       access_token:
         "APP_USR-7164111176476079-103013-c07b7b3052b41805a443030050951190-1105995931",
     });
 
     const result = await mercadopago.preferences.create({
-      items: itemss,
+      items: data,
     });
 
     console.log(result);
@@ -49,7 +49,7 @@ export const createOrder = async (req, res) => {
     }
     // Envía una respuesta al cliente
     res.status(500).send("Error interno del servidor: " + error.message);
-  }*/
+  }
 };
 
 async function fetchProducts() {
