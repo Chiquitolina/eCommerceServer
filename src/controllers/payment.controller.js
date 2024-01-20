@@ -16,21 +16,17 @@ export const createOrder = async (req, res) => {
 
   console.log(data);
 
-  /* data.forEach((element) => {
-    if (!element.product) {
-      console.log("Producto no definido encontrado", element);
-      return; // Salta este elemento o maneja el error como sea apropiado
-    }
+  data.forEach((element) => {
     let item = {
       title: element.product.name,
       quantity: element.cantidad,
       currency_id: "ARS",
       unit_price: element.product.price,
     };
-    itemss.push(item);
+    console.log(item);
   });
 
-  try {
+  /*  try {
     mercadopago.configure({
       access_token:
         "APP_USR-7164111176476079-103013-c07b7b3052b41805a443030050951190-1105995931",
