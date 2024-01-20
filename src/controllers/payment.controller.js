@@ -18,10 +18,10 @@ export const createOrder = async (req, res) => {
 
   data.forEach((element) => {
     let item = {
-      title: element.product.name,
+      title: element.name,
       quantity: element.cantidad,
       currency_id: "ARS",
-      unit_price: element.product.price,
+      unit_price: element.price,
     };
     console.log(item);
   });
