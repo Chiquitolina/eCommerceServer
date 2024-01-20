@@ -16,7 +16,7 @@ export const createOrder = async (req, res) => {
 
   console.log(data);
 
-  /*data.forEach((element) => {
+  data.forEach((element) => {
     let item = {
       title: element.name,
       quantity: element.cantidad,
@@ -25,7 +25,7 @@ export const createOrder = async (req, res) => {
     };
     console.log(item);
   });
-*/
+
   try {
     mercadopago.configure({
       access_token:
