@@ -19,7 +19,7 @@ export const createOrder = async (req, res) => {
   data.forEach((element) => {
     let item = {
       title: element.name,
-      quantity: element.cantidad,
+      quantity: 1,
       currency_id: "ARS",
       unit_price: element.price,
     };
