@@ -17,8 +17,12 @@ export const createOrder = async (req, res) => {
   console.log(data);
 
   data.forEach((element) => {
+    if (!element.product) {
+      console.log("Producto no definido encontrado", element);
+      return; // Salta este elemento o maneja el error como sea apropiado
+    }
     let item = {
-      title: element.product.title,
+      title: element.product.name,
       quantity: element.cantidad,
       currency_id: "ARS",
       unit_price: element.product.price,
