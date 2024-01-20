@@ -16,7 +16,7 @@ export const createOrder = async (req, res) => {
 
   console.log(data);
 
-  data.forEach((element) => {
+  /* data.forEach((element) => {
     let item = {
       title: element.name,
       quantity: 1,
@@ -24,7 +24,7 @@ export const createOrder = async (req, res) => {
       unit_price: element.price,
     };
     console.log(item);
-  });
+  });*/
 
   try {
     mercadopago.configure({
@@ -34,7 +34,6 @@ export const createOrder = async (req, res) => {
 
     const result = await mercadopago.preferences.create({
       items: data,
-      quantity: 3,
     });
 
     console.log(result);
