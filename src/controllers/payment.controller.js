@@ -34,6 +34,7 @@ export const createOrder = async (req, res) => {
 
     const result = await mercadopago.preferences.create({
       items: data,
+      quantity: 3,
     });
 
     console.log(result);
