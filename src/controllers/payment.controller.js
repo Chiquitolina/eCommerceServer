@@ -16,7 +16,7 @@ export const createOrder = async (req, res) => {
 
   console.log(data);
 
-  /* data.forEach((element) => {
+  data.forEach((element) => {
     let item = {
       title: element.product.name,
       quantity: element.cantidad,
@@ -29,16 +29,12 @@ export const createOrder = async (req, res) => {
   try {
     mercadopago.configure({
       access_token:
-        "APP_USR-7164111176476079-103013-c07b7b3052b41805a443030050951190-1105995931",
+        "TEST-3153283441446499-102118-01400bf36dcc82d6acb319d4fc0a2b2a-280573499",
+      //"APP_USR-7164111176476079-103013-c07b7b3052b41805a443030050951190-1105995931",
     });
 
     const result = await mercadopago.preferences.create({
       items: itemss,
-      back_urls: {
-        success: "http://localhost:3000/success",
-        failure: "http://localhost:3000/failure",
-        pending: "http://localhost:3000/pending",
-      },
     });
 
     console.log(result);
@@ -54,20 +50,46 @@ export const createOrder = async (req, res) => {
     }
     // Envía una respuesta al cliente
     res.status(500).send("Error interno del servidor: " + error.message);
-  }*/
+  }
 };
+
+async function fetchProducts() {
+  const productsPath = path.join(__dirname, "../data/products.json");
+  const data = await fs.readFile(productsPath, "utf8");
+  return JSON.parse(data);
+}
 
 export const getProducts = async (req, res) => {
   try {
-    const productsPath = path.join(__dirname, "../data/products.json");
-    const data = await fs.readFile(productsPath, "utf8");
-    const json = JSON.parse(data);
-    res.status(200).json(json);
+    const products = await fetchProducts();
+    res.status(200).json(products);
   } catch (error) {
-    console.log("Hubo un error al leer el archivo:", error);
+    console.error("Hubo un error al obtener los productos:", error);
     res.status(500).send("Error interno del servidor");
   }
 };
+
+export const addProduct = async (req, res) => {
+  try {
+    res.status(200).json(/* alguna respuesta basada en los productos */);
+  } catch (error) {
+    console.error("Hubo un error: ", error);
+    res.status(500).send("Error interno del servidor");
+  }
+};
+
+/*export const getNewProductId = async (req, res) => {
+  try {
+    const products = await fetchProducts();
+    // Aquí puedes implementar la lógica para obtener el nuevo ID de producto
+    // Por ejemplo, si el nuevo ID es simplemente el conteo de productos:
+    const newProductId = products.length + 1;
+    res.status(200).json({ newProductId });
+  } catch (error) {
+    console.error("Hubo un error al obtener el nuevo ID de producto:", error);
+    res.status(500).send("Error interno del servidor");
+  }
+};*/
 
 export const healthCheck = async (req, res) => {
   res.status(200).send("OK");
