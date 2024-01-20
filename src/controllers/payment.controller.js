@@ -16,7 +16,7 @@ export const createOrder = async (req, res) => {
 
   console.log(data);
 
- /* data.forEach((element) => {
+  /* data.forEach((element) => {
     if (!element.product) {
       console.log("Producto no definido encontrado", element);
       return; // Salta este elemento o maneja el error como sea apropiado
@@ -53,8 +53,8 @@ export const createOrder = async (req, res) => {
     }
     // Envía una respuesta al cliente
     res.status(500).send("Error interno del servidor: " + error.message);
-  }
-};*/
+  }*/
+};
 
 async function fetchProducts() {
   const productsPath = path.join(__dirname, "../data/products.json");
