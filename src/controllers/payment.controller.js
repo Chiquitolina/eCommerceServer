@@ -23,7 +23,7 @@ export const createOrder = async (req, res) => {
       currency_id: "ARS",
       unit_price: element.price,
     };
-    console.log(item);
+    itemss.push(item);
   });
 
   try {
