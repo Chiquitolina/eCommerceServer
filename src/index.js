@@ -10,7 +10,14 @@ const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.options("*", cors());
+const corsOptions = {
+  origin: "http://localhost:4200", // Reemplaza con el origen de tu frontend de Angular
+  methods: "GET,POST,PUT,DELETE,OPTIONS", // Métodos permitidos
+  allowedHeaders: "Content-Type,Authorization", // Encabezados permitidos
+};
+
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions)); // Habilita preflight para todas las rutas
 
 app.use(morgan("dev"));
 
