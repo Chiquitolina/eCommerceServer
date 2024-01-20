@@ -16,7 +16,7 @@ export const createOrder = async (req, res) => {
 
   console.log(data);
 
-  /* data.forEach((element) => {
+  data.forEach((element) => {
     let item = {
       title: element.name,
       quantity: 1,
@@ -33,7 +33,7 @@ export const createOrder = async (req, res) => {
     });
 
     const result = await mercadopago.preferences.create({
-      items: data,
+      items: itemss,
     });
 
     console.log(result);
@@ -49,7 +49,7 @@ export const createOrder = async (req, res) => {
     }
     // Envía una respuesta al cliente
     res.status(500).send("Error interno del servidor: " + error.message);
-  }*/
+  }
 };
 
 async function fetchProducts() {
