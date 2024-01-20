@@ -16,7 +16,7 @@ export const createOrder = async (req, res) => {
 
   console.log(data);
 
-  data.forEach((element) => {
+ /* data.forEach((element) => {
     if (!element.product) {
       console.log("Producto no definido encontrado", element);
       return; // Salta este elemento o maneja el error como sea apropiado
@@ -33,8 +33,7 @@ export const createOrder = async (req, res) => {
   try {
     mercadopago.configure({
       access_token:
-        "TEST-3153283441446499-102118-01400bf36dcc82d6acb319d4fc0a2b2a-280573499",
-      //"APP_USR-7164111176476079-103013-c07b7b3052b41805a443030050951190-1105995931",
+        "APP_USR-7164111176476079-103013-c07b7b3052b41805a443030050951190-1105995931",
     });
 
     const result = await mercadopago.preferences.create({
@@ -55,7 +54,7 @@ export const createOrder = async (req, res) => {
     // Envía una respuesta al cliente
     res.status(500).send("Error interno del servidor: " + error.message);
   }
-};
+};*/
 
 async function fetchProducts() {
   const productsPath = path.join(__dirname, "../data/products.json");
