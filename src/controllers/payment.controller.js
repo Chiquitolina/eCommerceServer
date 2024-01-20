@@ -24,7 +24,7 @@ export const createOrder = async (req, res) => {
       unit_price: element.price,
     };
     console.log(item);
-  });*/
+  });
 
   try {
     mercadopago.configure({
@@ -49,7 +49,7 @@ export const createOrder = async (req, res) => {
     }
     // Envía una respuesta al cliente
     res.status(500).send("Error interno del servidor: " + error.message);
-  }
+  }*/
 };
 
 async function fetchProducts() {
