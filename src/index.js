@@ -11,9 +11,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const corsOptions = {
-  origin: "http://localhost:3000", // Reemplaza con el origen de tu frontend de Angular
+  origin: ["http://localhost:3000", "https://nora.com.ar"], // Orígenes permitidos
   methods: "GET,POST,PUT,DELETE,OPTIONS", // Métodos permitidos
-  allowedHeaders: "Content-Type,Authorization,Access-Control-Allow-Origin", // Encabezados permitidos
+  allowedHeaders: "Content-Type,Authorization", // Encabezados permitidos
 };
 
 app.use(cors(corsOptions));
