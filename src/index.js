@@ -35,6 +35,6 @@ app.get("*", (_, res) => {
   res.sendFile(path.join(__dirname, "/public/index.html"));
 });
 
-app.listen(3000, () => {
+app.listen(3000, "0.0.0.0", () => {
   console.log("Escuchando el puerto 3000");
 });
