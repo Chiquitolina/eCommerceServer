@@ -3,6 +3,7 @@ import { fileURLToPath } from "url";
 import morgan from "morgan";
 import path from "path";
 import router from "./routes/payment.route.js";
+import authRouter from "./routes/auth.route.js";
 import cors from "cors";
 
 const app = express();
@@ -28,6 +29,7 @@ app.options("*", cors(corsOptions)); // Habilita preflight para todas las rutas
 app.use(express.json());
 
 app.use(router);
+app.use('/admin', authRouter)
 
 app.use("/", express.static(path.join(__dirname, "/public")));
 
