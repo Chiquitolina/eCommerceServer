@@ -1,6 +1,6 @@
 import mercadopago from "mercadopago";
 import dotenv from "dotenv";
-import fs from "fs/promises"; // Usar fs.promises para operaciones asíncronas con promesas
+import fs from "fs/promises";
 
 import { fileURLToPath } from "url";
 import path from "path";
@@ -19,15 +19,13 @@ export const createOrder = async (req, res) => {
   data.forEach((element) => {
     let item = {
       title: element.product.name,
-      quantity: 1,
+      quantity: element.cantidad,
       currency_id: "ARS",
-      unit_price: element.product.price,
+      unit_price: Number(element.product.price),
     };
+    console.log(element);
     itemss.push(item);
   });
-
-  console.log(itemss);
-
   try {
     mercadopago.configure({
       access_token:
@@ -39,8 +37,6 @@ export const createOrder = async (req, res) => {
     });
 
     console.log(result);
-
-    console.log(itemss);
 
     res.json({ message: result.body.init_point });
   } catch (error) {

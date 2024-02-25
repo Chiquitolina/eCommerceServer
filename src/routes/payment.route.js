@@ -11,8 +11,6 @@ router.post("/create-order", createOrder);
 
 router.get("/health-check", healthCheck);
 
-router.get("/get-products", getProducts);
-
 router.post("/failure", (req, res) => {
   console.log("failure");
 });

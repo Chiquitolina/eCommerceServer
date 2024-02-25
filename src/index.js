@@ -1,9 +1,13 @@
 import express from "express";
+await import('dotenv').then(dotenv => dotenv.config());
 import { fileURLToPath } from "url";
 import morgan from "morgan";
 import path from "path";
 import router from "./routes/payment.route.js";
 import authRouter from "./routes/auth.route.js";
+import productRouter from "./routes/product.route.js";
+
+
 import cors from "cors";
 
 const app = express();
@@ -30,6 +34,7 @@ app.use(express.json());
 
 app.use(router);
 app.use('/admin', authRouter)
+app.use(productRouter)
 
 app.use("/", express.static(path.join(__dirname, "/public")));
 
@@ -37,6 +42,6 @@ app.get("*", (_, res) => {
   res.sendFile(path.join(__dirname, "/public/index.html"));
 });
 
-app.listen(3000, "0.0.0.0", () => {
+app.listen(3000, () => {
   console.log("Escuchando el puerto 3000");
 });

@@ -6,20 +6,26 @@
     "price": 15500,
     "currency": "ARS",
     "image": "https://i.postimg.cc/3Rj948Q5/Sin-t-tulo.png",
-    "analitics": [],
+    "analytics": [],
     "contenido": "30u / 150mg",
     "ratio": "1 - 1"
   },
   {
     "id": 2,
     "name": "EQUILIBRIO",
+    "price": "90000",
     "description": "Equilibrio en su máxima expresión. Experimentá cómo un cuerpo y mente en equilibrio pueden transformar tu vida cotidiana, brindandote sensación de calma y plenitud.",
-    "price": 9000,
-    "currency": "ARS",
-    "image": "https://i.postimg.cc/wj4xdYQT/DSC-2912.jpg",
-    "analitics": [],
+    "ratio": "50 - 1",
     "contenido": "200mg / 15ml",
-    "ratio": "50 - 1"
+    "image": "https://i.postimg.cc/wj4xdYQT/DSC-2912.jpg",
+    "analytics": [
+      {
+        "idProduct": 2,
+        "name": "dasddadsad",
+        "link": "asdadadsa",
+        "id": 1
+      }
+    ]
   },
   {
     "id": 3,
@@ -28,7 +34,7 @@
     "price": 9000,
     "currency": "ARS",
     "image": "https://i.postimg.cc/fTKTB93d/DSC-2898.jpg",
-    "analitics": [],
+    "analytics": [],
     "contenido": "200mg / 15ml",
     "ratio": "1 - 1"
   },
@@ -39,20 +45,19 @@
     "price": 9000,
     "currency": "ARS",
     "image": "https://i.postimg.cc/YS4rrDdN/DSC-2970.jpg",
-    "analitics": [],
+    "analytics": [],
     "contenido": "200mg / 15ml",
     "ratio": "3 - 1"
   },
   {
     "id": 5,
     "name": "DESCANSO",
+    "price": "12500",
     "description": "Experimentá un sueño profundo y revitalizador. Disfrutá la serenidad que tu cuerpo y mente merecen.",
-    "price": 9000,
-    "currency": "ARS",
-    "image": "https://i.postimg.cc/mggZqgM5/DSC-2932.jpg",
-    "analitics": [],
+    "ratio": "50 - 1",
     "contenido": "200mg / 15ml",
-    "ratio": "50 - 1"
+    "image": "https://i.postimg.cc/mggZqgM5/DSC-2932.jpg",
+    "analytics": []
   },
   {
     "id": 6,
@@ -61,7 +66,7 @@
     "price": 13000,
     "currency": "ARS",
     "image": "https://i.ibb.co/1L9qWFv/cremea.png",
-    "analitics": [],
+    "analytics": [],
     "contenido": "100cm / 700mg",
     "ratio": ""
   }
