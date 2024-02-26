@@ -4,14 +4,16 @@ import path from "path";
 
 const SECRET_KEY = process.env.JWT_SECRET;
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+
 const getUserCredentialas = async () => {
   try {
 
-    const authPath = path.join(__dirname, "../data/creds.json");
-
-    const credentials = await fs.readFile(authPath, "utf8");
-
-    return JSON.parse(credentials);
+    const productsPath = path.join(__dirname, "../data/creds.json");
+    const data = await fs.readFile(productsPath, "utf8");
+    return JSON.parse(data)    
   } catch (error) {
     console.log("Error al traer las credenciales", error);
     throw error;
