@@ -1,13 +1,11 @@
 import jwt from "jsonwebtoken";
 import fs from "fs/promises";
-import path from "path";
 
 const SECRET_KEY = process.env.JWT_SECRET;
 
 const getUserCredentialas = async () => {
   try {
-    const credsPath = path.join(__dirname, "..", "data", "creds.json");
-    const credentials = await fs.readFile(credsPath, "utf8");
+    const credentials = await fs.readFile("src/data/creds.json", "utf8");
     return JSON.parse(credentials);
   } catch (error) {
     console.log("Error al traer las credenciales", error);
