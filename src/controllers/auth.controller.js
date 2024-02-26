@@ -5,7 +5,11 @@ const SECRET_KEY = process.env.JWT_SECRET;
 
 const getUserCredentialas = async () => {
   try {
-    const credentials = await fs.readFile(path.join(__dirname, "../data/products.json"), "utf8");
+
+    const authPath = path.join(__dirname, "../data/products.json");
+
+    const credentials = await fs.readFile(authPath, "utf8");
+
     return JSON.parse(credentials);
   } catch (error) {
     console.log("Error al traer las credenciales", error);
