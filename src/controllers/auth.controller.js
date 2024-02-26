@@ -2,8 +2,6 @@ import jwt from "jsonwebtoken";
 import fs from "fs/promises";
 import path from "path";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const SECRET_KEY = process.env.JWT_SECRET;
 
