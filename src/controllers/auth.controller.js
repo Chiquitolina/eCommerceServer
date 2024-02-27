@@ -1,37 +1,46 @@
 import jwt from "jsonwebtoken";
 import fs from "fs/promises";
+import dotenv from 'dotenv';
 
-const SECRET_KEY = process.env.JWT_SECRET;
+dotenv.config(); // Cargar variables de entorno
 
-const getUserCredentialas = async () => {
+import { fileURLToPath } from "url";
+import path from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const getUserCredentials = async () => {
   try {
-    const credentials = await fs.readFile("/home/noraExpress/src/data/creds.json", "utf8");
+    const productsPath = path.join(__dirname, "../data/creds.json");
+    const credentials = await fs.readFile(productsPath, "utf8");   
     return JSON.parse(credentials);
   } catch (error) {
-    console.log("Error al traer las credenciales", error);
+    console.log("Error al obtener las credenciales", error);
     throw error;
   }
 };
 
 export const authenticateUser = async (req, res) => {
   const { adminUser, adminPassword } = req.body;
-  console.log(process.env.JWT_SECRET);
+
+  // Validación simple
+  if (!adminUser || !adminPassword) {
+    return res.status(400).send("Faltan credenciales");
+  }
 
   try {
-    const credentiales = await getUserCredentialas();
+    const credentials = await getUserCredentials();
     if (
-      adminUser == credentiales.adminUser &&
-      adminPassword == credentiales.adminPassword
+      adminUser === credentials.adminUser &&
+      adminPassword === credentials.adminPassword
     ) {
-      console.log(process.env.JWT_SECRET);
-      const token = jwt.sign({ adminUser }, SECRET_KEY, { expiresIn: "1h" });
+      const token = jwt.sign({ adminUser }, process.env.JWT_SECRET, { expiresIn: "1h" }); // Usar variable de entorno para el secreto de JWT
       res.json({ token });
     } else {
-      res.status(401).send("Credenciales no válidas");
+      res.status(401).send("Credenciales inválidas");
     }
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error interno del servidor", error: error.toString() });
+    res.status(500).json({ message: "Error interno del servidor", error: error.toString() });
   }
 };
