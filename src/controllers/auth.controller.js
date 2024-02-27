@@ -35,7 +35,7 @@ export const authenticateUser = async (req, res) => {
       adminUser === credentials.adminUser &&
       adminPassword === credentials.adminPassword
     ) {
-      const token = jwt.sign({ adminUser }, process.env.JWT_SECRET, { expiresIn: "1h" }); // Usar variable de entorno para el secreto de JWT
+      const token = jwt.sign({ adminUser }, 'claveclavel', { expiresIn: "1h" }); // Usar variable de entorno para el secreto de JWT
       res.json({ token });
     } else {
       res.status(401).send("Credenciales inválidas");
