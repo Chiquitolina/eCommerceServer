@@ -6,7 +6,7 @@ import path from "path";
 import router from "./routes/payment.route.js";
 import authRouter from "./routes/auth.route.js";
 import productRouter from "./routes/product.route.js";
-
+import emailRouter from "./routes/email.route.js";
 
 import cors from "cors";
 
@@ -35,6 +35,8 @@ app.use(express.json());
 app.use(router);
 app.use('/admin', authRouter)
 app.use(productRouter)
+app.use(emailRouter)
+
 
 app.use("/", express.static(path.join(__dirname, "/public")));
 

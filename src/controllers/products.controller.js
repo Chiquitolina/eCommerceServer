@@ -1,19 +1,25 @@
 import fs from "fs/promises";
 import { fileURLToPath } from "url";
 import path from "path";
-import { networkInterfaces } from "os";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-async function fetchProducts() {
+// Función auxiliar para cargar productos
+const loadProducts = async () => {
   const productsPath = path.join(__dirname, "../data/products.json");
-  const data = await fs.readFile(productsPath, "utf8");
+  const data = await fs.readFile(productsPath, 'utf8');
   return JSON.parse(data);
-}
+};
 
-async function fetchProductById(productId) {
-  const products = await fetchProducts();
+// Función auxiliar para guardar productos
+const saveProducts = async (products) => {
+  const productsPath = path.join(__dirname, "../data/products.json");
+  await fs.writeFile(productsPath, JSON.stringify(products, null, 2), 'utf8');
+};
+
+export const fetchProductById = async (productId) => {
+  const products = await loadProducts();
   const product = products.find((product) => product.id === productId);
   if (!product) {
     throw new Error(`El producto con ID ${productId} no fue encontrado`);
@@ -23,7 +29,7 @@ async function fetchProductById(productId) {
 
 export const getProducts = async (req, res) => {
   try {
-    const products = await fetchProducts();
+    const products = await loadProducts();
     res.status(200).json(products);
   } catch (error) {
     console.error("Hubo un error al obtener los productos:", error);
@@ -32,28 +38,17 @@ export const getProducts = async (req, res) => {
 };
 
 export const deleteProduct = async (req, res) => {
-  const requestData = req.body;
-  const productId = requestData.id; // Extraer el ID del cuerpo de la solicitud
+  const productId = req.params.id; // Extraer el ID de los parámetros de ruta
   console.log(productId);
   try {
-      const products = await fetchProducts();
-      const productIndex = products.findIndex(
-        (product) => product.id === productId
-    );
+    const products = await loadProducts();
+    const productIndex = products.findIndex((product) => product.id === productId);
+
     if (productIndex !== -1) {
-      const product = products[productIndex];
-      // Eliminar el producto del arreglo de productos
-      products.splice(productIndex, 1);
-      const productsPath = path.join(__dirname, "../data/products.json");
-      await fs.writeFile(
-        productsPath,
-        JSON.stringify(products, null, 2),
-        "utf8"
-      );
-      // Aquí puedes realizar cualquier otra operación necesaria, como guardar el arreglo actualizado en la base de datos, si es aplicable.
-      res.status(200).json(product);
+      const [deletedProduct] = products.splice(productIndex, 1);
+      await saveProducts(products);
+      res.status(200).json(deletedProduct);
     } else {
-      // Si no se encuentra el producto con el ID proporcionado
       res.status(404).send("Producto no encontrado");
     }
   } catch (error) {
@@ -62,24 +57,23 @@ export const deleteProduct = async (req, res) => {
   }
 };
 
+// Editar un producto
 export const editProduct = async (req, res) => {
-  const requestData = req.body;
-  console.log("ID del producto recibido:", requestData.id);
-  console.log(req.body); // Esto debería mostrarte el ID del producto.
+  const productId = req.params.id;
+  const updatedData = req.body;
+  console.log("ID del producto recibido:", productId);
+  console.log(req.body);
 
   try {
-    const products = await fetchProducts();
-    const productIndex = products.findIndex(
-      (product) => product.id === requestData.id
-    );
+    const products = await loadProducts();
+    const productIndex = products.findIndex((product) => product.id === productId);
 
     if (productIndex === -1) {
       return res.status(404).send("Producto no encontrado");
     }
 
-    products[productIndex] = requestData;
-    const productsPath = path.join(__dirname, "../data/products.json");
-    await fs.writeFile(productsPath, JSON.stringify(products, null, 2), "utf8");
+    products[productIndex] = { ...products[productIndex], ...updatedData };
+    await saveProducts(products);
 
     res.status(200).json({ message: "Producto actualizado con éxito" });
   } catch (error) {
@@ -88,23 +82,17 @@ export const editProduct = async (req, res) => {
   }
 };
 
+// Añadir un nuevo producto
 export const addProduct = async (req, res) => {
   try {
-    let products = await fetchProducts();
-
-    const newId = products.reduce((maxId, product) => Math.max(maxId, parseInt(product.id, 10)), 0) + 1;
-
-    console.log(req.body); // Verificar qué contiene req.body
+    const products = await loadProducts();
+    const newId = (products.reduce((maxId, product) => Math.max(maxId, parseInt(product.id, 10)), 0) + 1).toString();
 
     const { id, ...bodyWithoutId } = req.body; // Eliminar el id de req.body si existe
-
     const newProduct = { id: newId, ...bodyWithoutId };
 
-    products.push(newProduct)
-
-    const productsPath = path.join(__dirname, "../data/products.json");
-
-    await fs.writeFile(productsPath, JSON.stringify(products, null, 2), "utf8");
+    products.push(newProduct);
+    await saveProducts(products);
 
     res.status(201).json(newProduct);
   } catch (error) {
@@ -112,11 +100,12 @@ export const addProduct = async (req, res) => {
     res.status(500).send("Error interno del servidor");
   }
 };
-export const addAnalytic = async (req, res) => {
+
+/*export const addAnalytic = async (req, res) => {
   const requestData = req.body;
   try {
     let products = await fetchProducts(); // Suponiendo que esto devuelve todos los productos
-    const productIndex = products.findIndex(p => p.id === requestData.id); // Encuentra el índice del producto por ID
+    const productIndex = products.findIndex((p) => p.id === requestData.id); // Encuentra el índice del producto por ID
 
     if (productIndex === -1) {
       return res.status(404).send("Producto no encontrado");
@@ -153,10 +142,4 @@ export const addAnalytic = async (req, res) => {
     console.error("Error al agregar analytic:", error);
     res.status(500).send("Error interno del servidor");
   }
-  
-};
-
-
-
-
-
+};*/
