@@ -18,14 +18,22 @@ const saveProducts = async (products) => {
   await fs.writeFile(productsPath, JSON.stringify(products, null, 2), 'utf8');
 };
 
-export const fetchProductById = async (productId) => {
-  const products = await loadProducts();
-  const product = products.find((product) => product.id === productId);
-  if (!product) {
-    throw new Error(`El producto con ID ${productId} no fue encontrado`);
+export const getProductById = async (req, res) => {
+  const productId = req.params.id; // Obtener el ID del producto de los parámetros de ruta
+  try {
+    const products = await loadProducts();
+    const product = products.find((product) => product.id.toString() === productId); // Asegurarse de comparar como cadena
+    if (!product) {
+      console.log(`El producto con ID ${productId} no fue encontrado`);
+      return res.status(404).json({ error: `El producto con ID ${productId} no fue encontrado` });
+    }
+    console.log(`Producto solicitado:`, product); // Logear el producto solicitado
+    return res.status(200).json(product);
+  } catch (error) {
+    console.error("Hubo un error al obtener el producto:", error);
+    return res.status(500).json({ error: 'Error interno del servidor' });
   }
-  return product;
-}
+};
 
 export const getProducts = async (req, res) => {
   try {
