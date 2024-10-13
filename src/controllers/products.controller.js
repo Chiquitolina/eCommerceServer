@@ -8,39 +8,110 @@ const __dirname = path.dirname(__filename);
 // Función auxiliar para cargar productos
 const loadProducts = async () => {
   const productsPath = path.join(__dirname, "../data/products.json");
-  const data = await fs.readFile(productsPath, 'utf8');
+  const data = await fs.readFile(productsPath, "utf8");
   return JSON.parse(data);
 };
 
 // Función auxiliar para guardar productos
 const saveProducts = async (products) => {
   const productsPath = path.join(__dirname, "../data/products.json");
-  await fs.writeFile(productsPath, JSON.stringify(products, null, 2), 'utf8');
+  await fs.writeFile(productsPath, JSON.stringify(products, null, 2), "utf8");
 };
 
 export const getProductById = async (req, res) => {
   const productId = req.params.id; // Obtener el ID del producto de los parámetros de ruta
   try {
     const products = await loadProducts();
-    const product = products.find((product) => product.id.toString() === productId); // Asegurarse de comparar como cadena
+    const product = products.find(
+      (product) => product.id.toString() === productId
+    ); // Asegurarse de comparar como cadena
     if (!product) {
       console.log(`El producto con ID ${productId} no fue encontrado`);
-      return res.status(404).json({ error: `El producto con ID ${productId} no fue encontrado` });
+      return res
+        .status(404)
+        .json({ error: `El producto con ID ${productId} no fue encontrado` });
     }
     console.log(`Producto solicitado:`, product); // Logear el producto solicitado
     return res.status(200).json(product);
   } catch (error) {
     console.error("Hubo un error al obtener el producto:", error);
-    return res.status(500).json({ error: 'Error interno del servidor' });
+    return res.status(500).json({ error: "Error interno del servidor" });
   }
 };
 
 export const getProducts = async (req, res) => {
   try {
+    // Loguear los query parameters para depuración
+    console.log("Query parameters received:", req.query); // Deberías ver algo como { size: ['6.5', '7'] }
+    console.log("Category:", req.params.category); // "hombre"
+    console.log("Subcategory:", req.params.subcategory); // "calzado"
+    
     const products = await loadProducts();
-    res.status(200).json(products);
+    const { category, subcategory } = req.params;
+    let { sale, size, price_min, price_max } = req.query;
+
+    let filteredProducts = products;
+
+    // Filtra por categoría si se proporciona
+    if (category) {
+      filteredProducts = filteredProducts.filter(
+        (product) => product.category === category
+      );
+    }
+
+    // Filtra por subcategoría si se proporciona
+    if (subcategory) {
+      filteredProducts = filteredProducts.filter(
+        (product) => product.subcategory === subcategory
+      );
+    }
+
+    if (sale) {
+      // Convertir el descuento a un array. Si es un solo valor, se convierte a array.
+      const discountsArray = Array.isArray(sale)
+        ? sale.map(Number)
+        : [Number(sale)];
+    
+      filteredProducts = filteredProducts.filter((product) => {
+        // Cambia `product.sale` a `product.discount` y convierte `discount` a número
+        const productDiscount = Number(product.discount) || 0; // Asegúrate de que sea un número
+        return discountsArray.includes(productDiscount);
+      });
+    }
+
+    // Filtra por tamaño si se proporciona
+    if (size) {
+      size = Number(size); // Asegurarse de que el tamaño sea un número
+      filteredProducts = filteredProducts.filter(
+        (product) => product.sizes.some((s) => s.size === size && s.quantity > 0)
+      );
+    }
+
+    // Filtra por rango de precios si se proporciona
+    if (price_min || price_max) {
+      const minPrice = price_min ? Number(price_min) : 0;
+      const maxPrice = price_max ? Number(price_max) : Infinity;
+      filteredProducts = filteredProducts.filter((product) => {
+        return product.price >= minPrice && product.price <= maxPrice;
+      });
+    }
+
+    // Verifica si se encontraron productos filtrados
+    if (filteredProducts.length === 0) {
+      return res
+        .status(404)
+        .send(
+          "No se encontraron productos para la categoría y/o subcategoría especificada."
+        );
+    }
+
+    // Responde con los productos filtrados
+    res.status(200).json(filteredProducts);
   } catch (error) {
-    console.error("Hubo un error al obtener los productos:", error);
+    console.error(
+      "Error al obtener productos por categoría/subcategoría:",
+      error
+    );
     res.status(500).send("Error interno del servidor");
   }
 };
@@ -50,7 +121,9 @@ export const deleteProduct = async (req, res) => {
   console.log(productId);
   try {
     const products = await loadProducts();
-    const productIndex = products.findIndex((product) => product.id === productId);
+    const productIndex = products.findIndex(
+      (product) => product.id === productId
+    );
 
     if (productIndex !== -1) {
       const [deletedProduct] = products.splice(productIndex, 1);
@@ -74,7 +147,9 @@ export const editProduct = async (req, res) => {
 
   try {
     const products = await loadProducts();
-    const productIndex = products.findIndex((product) => product.id === productId);
+    const productIndex = products.findIndex(
+      (product) => product.id === productId
+    );
 
     if (productIndex === -1) {
       return res.status(404).send("Producto no encontrado");
@@ -94,7 +169,12 @@ export const editProduct = async (req, res) => {
 export const addProduct = async (req, res) => {
   try {
     const products = await loadProducts();
-    const newId = (products.reduce((maxId, product) => Math.max(maxId, parseInt(product.id, 10)), 0) + 1).toString();
+    const newId = (
+      products.reduce(
+        (maxId, product) => Math.max(maxId, parseInt(product.id, 10)),
+        0
+      ) + 1
+    ).toString();
 
     const { id, ...bodyWithoutId } = req.body; // Eliminar el id de req.body si existe
     const newProduct = { id: newId, ...bodyWithoutId };

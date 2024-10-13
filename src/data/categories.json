@@ -1,0 +1,169 @@
+[
+  {
+    "id": 1,
+    "name": "hombre",
+    "subcategories": [
+      {
+        "id": 100,
+        "name": "todos-los-productos"
+      },
+
+      {
+        "id": 101,
+        "name": "remeras-y-camisetas"
+      },
+      {
+        "id": 102,
+        "name": "camisas"
+      },
+      {
+        "id": 103,
+        "name": "pantalones-y-buzos"
+      },
+      {
+        "id": 104,
+        "name": "shorts"
+      },
+      {
+        "id": 105,
+        "name": "camperas"
+      },
+      {
+        "id": 106,
+        "name": "medias"
+      },
+      {
+        "id": 107,
+        "name": "buzos"
+      },
+      {
+        "id": 108,
+        "name": "calzado"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "mujer",
+    "subcategories": [
+      {
+        "id": 200,
+        "name": "todos-los-productos"
+      },
+      {
+        "id": 201,
+        "name": "remeras-y-camisetas"
+      },
+      {
+        "id": 202,
+        "name": "camisas"
+      },
+      {
+        "id": 203,
+        "name": "pantalones-y-buzos"
+      },
+      {
+        "id": 204,
+        "name": "shorts"
+      },
+      {
+        "id": 205,
+        "name": "camperas"
+      },
+      {
+        "id": 206,
+        "name": "medias"
+      },
+      {
+        "id": 207,
+        "name": "buzos"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "niños",
+    "subcategories": [
+      {
+        "id": 300,
+        "name": "todos-los-productos"
+      },
+      {
+        "id": 301,
+        "name": "remeras-y-camisetas"
+      },
+      {
+        "id": 302,
+        "name": "camisas"
+      },
+      {
+        "id": 303,
+        "name": "pantalones-y-buzos"
+      },
+      {
+        "id": 304,
+        "name": "shorts"
+      },
+      {
+        "id": 305,
+        "name": "camperas"
+      },
+      {
+        "id": 306,
+        "name": "medias"
+      },
+      {
+        "id": 307,
+        "name": "buzos"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "accesorios",
+    "subcategories": [
+      {
+        "id": 400,
+        "name": "todos-los-productos"
+      },
+      {
+        "id": 401,
+        "name": "medias"
+      },
+      {
+        "id": 402,
+        "name": "gorras-y-vinchas"
+      },
+      {
+        "id": 403,
+        "name": "bolsos-y-mochilas"
+      },
+      {
+        "id": 404,
+        "name": "riñoneras"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "oportunidades",
+    "subcategories": [
+      {
+        "id": 500,
+        "name": "todos-los-productos"
+      },
+      {
+        "id": 501,
+        "name": "hombres"
+      },
+      {
+        "id": 502,
+        "name": "mujeres"
+      },
+      {
+        "id": 503,
+        "name": "niños"
+      }
+    ]
+  }
+]

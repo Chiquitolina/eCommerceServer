@@ -5,7 +5,7 @@ const productRouter = Router()
 
 productRouter.put('/edit-product', editProduct);
 
-productRouter.get("/get-products", getProducts);
+productRouter.get("/get-products/:category?/:subcategory?", getProducts);
 
 /*productRouter.get("/get-products-by-category/:category")*/
 

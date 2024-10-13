@@ -12,7 +12,7 @@ dotenv.config();
 
 export const createOrder = async (req, res) => {
   let data = req.body.items;
-  let itemss = [];
+  let itemsMercadoPago = [];
 
   console.log(data);
 
@@ -23,8 +23,7 @@ export const createOrder = async (req, res) => {
       currency_id: "ARS",
       unit_price: Number(element.product.price),
     };
-    console.log(element);
-    itemss.push(item);
+    itemsMercadoPago.push(item);
   });
   try {
     mercadopago.configure({
@@ -33,7 +32,7 @@ export const createOrder = async (req, res) => {
     });
 
     const result = await mercadopago.preferences.create({
-      items: itemss,
+      items: itemsMercadoPago,
     });
 
     console.log(result);
