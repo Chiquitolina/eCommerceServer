@@ -1,9 +1,6 @@
 import fs from "fs/promises";
-import { fileURLToPath } from "url";
 import path from "path";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { Request, Response } from 'express';
 
 // Función auxiliar para cargar productos
 const loadProducts = async () => {
@@ -13,17 +10,17 @@ const loadProducts = async () => {
 };
 
 // Función auxiliar para guardar productos
-const saveProducts = async (products) => {
+const saveProducts = async (products: any) => {
   const productsPath = path.join(__dirname, "../data/products.json");
   await fs.writeFile(productsPath, JSON.stringify(products, null, 2), "utf8");
 };
 
-export const getProductById = async (req, res) => {
+export const getProductById = async (req: Request, res: Response) :Promise<any> => {
   const productId = req.params.id; // Obtener el ID del producto de los parámetros de ruta
   try {
     const products = await loadProducts();
     const product = products.find(
-      (product) => product.id.toString() === productId
+      (product: any) => product.id.toString() === productId
     ); // Asegurarse de comparar como cadena
     if (!product) {
       console.log(`El producto con ID ${productId} no fue encontrado`);
@@ -39,7 +36,7 @@ export const getProductById = async (req, res) => {
   }
 };
 
-export const getProducts = async (req, res) => {
+export const getProducts = async (req: Request, res: Response): Promise<any> => {
   try {
     // Loguear los query parameters para depuración
     console.log("Query parameters received:", req.query); // Deberías ver algo como { size: ['6.5', '7'] }
@@ -55,14 +52,14 @@ export const getProducts = async (req, res) => {
     // Filtra por categoría si se proporciona
     if (category) {
       filteredProducts = filteredProducts.filter(
-        (product) => product.category === category
+        (product: any) => product.category === category
       );
     }
 
     // Filtra por subcategoría si se proporciona
     if (subcategory) {
       filteredProducts = filteredProducts.filter(
-        (product) => product.subcategory === subcategory
+        (product: any) => product.subcategory === subcategory
       );
     }
 
@@ -72,7 +69,7 @@ export const getProducts = async (req, res) => {
         ? sale.map(Number)
         : [Number(sale)];
     
-      filteredProducts = filteredProducts.filter((product) => {
+      filteredProducts = filteredProducts.filter((product: any) => {
         // Cambia `product.sale` a `product.discount` y convierte `discount` a número
         const productDiscount = Number(product.discount) || 0; // Asegúrate de que sea un número
         return discountsArray.includes(productDiscount);
@@ -81,9 +78,9 @@ export const getProducts = async (req, res) => {
 
     // Filtra por tamaño si se proporciona
     if (size) {
-      size = Number(size); // Asegurarse de que el tamaño sea un número
+      /*size = Number(size); // Asegurarse de que el tamaño sea un número*/
       filteredProducts = filteredProducts.filter(
-        (product) => product.sizes.some((s) => s.size === size && s.quantity > 0)
+        (product: any) => product.sizes.some((s: any) => s.size === size && s.quantity > 0)
       );
     }
 
@@ -91,7 +88,7 @@ export const getProducts = async (req, res) => {
     if (price_min || price_max) {
       const minPrice = price_min ? Number(price_min) : 0;
       const maxPrice = price_max ? Number(price_max) : Infinity;
-      filteredProducts = filteredProducts.filter((product) => {
+      filteredProducts = filteredProducts.filter((product: any) => {
         return product.price >= minPrice && product.price <= maxPrice;
       });
     }
@@ -116,13 +113,13 @@ export const getProducts = async (req, res) => {
   }
 };
 
-export const deleteProduct = async (req, res) => {
+export const deleteProduct = async (req: Request, res: Response): Promise<any> => {
   const productId = req.params.id; // Extraer el ID de los parámetros de ruta
   console.log(productId);
   try {
     const products = await loadProducts();
     const productIndex = products.findIndex(
-      (product) => product.id === productId
+      (product: any) => product.id === productId
     );
 
     if (productIndex !== -1) {
@@ -139,7 +136,7 @@ export const deleteProduct = async (req, res) => {
 };
 
 // Editar un producto
-export const editProduct = async (req, res) => {
+export const editProduct = async (req: Request, res: Response): Promise<any> => {
   const productId = req.params.id;
   const updatedData = req.body;
   console.log("ID del producto recibido:", productId);
@@ -148,7 +145,7 @@ export const editProduct = async (req, res) => {
   try {
     const products = await loadProducts();
     const productIndex = products.findIndex(
-      (product) => product.id === productId
+      (product:any) => product.id === productId
     );
 
     if (productIndex === -1) {
@@ -166,12 +163,12 @@ export const editProduct = async (req, res) => {
 };
 
 // Añadir un nuevo producto
-export const addProduct = async (req, res) => {
+export const addProduct = async (req: Request, res: Response): Promise<any> => {
   try {
     const products = await loadProducts();
     const newId = (
       products.reduce(
-        (maxId, product) => Math.max(maxId, parseInt(product.id, 10)),
+        (maxId: any, product: any) => Math.max(maxId, parseInt(product.id, 10)),
         0
       ) + 1
     ).toString();

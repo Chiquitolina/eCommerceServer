@@ -1,22 +1,18 @@
 import mercadopago from "mercadopago";
 import dotenv from "dotenv";
 import fs from "fs/promises";
-
-import { fileURLToPath } from "url";
+import { Request, Response } from 'express';
 import path from "path";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 dotenv.config();
 
-export const createOrder = async (req, res) => {
+export const createOrder = async (req: Request, res: Response): Promise<any> => {
   let data = req.body.items;
-  let itemsMercadoPago = [];
+  let itemsMercadoPago: any = [];
 
   console.log(data);
 
-  data.forEach((element) => {
+  data.forEach((element: any) => {
     let item = {
       title: element.product.name,
       quantity: element.cantidad,
@@ -25,12 +21,9 @@ export const createOrder = async (req, res) => {
     };
     itemsMercadoPago.push(item);
   });
-  try {
-    mercadopago.configure({
-      access_token:
-        "APP_USR-7164111176476079-103013-c07b7b3052b41805a443030050951190-1105995931",
-    });
 
+  try {
+    // Crear la preferencia de pago
     const result = await mercadopago.preferences.create({
       items: itemsMercadoPago,
     });
@@ -38,7 +31,7 @@ export const createOrder = async (req, res) => {
     console.log(result);
 
     res.json({ message: result.body.init_point });
-  } catch (error) {
+  } catch (error: any) {
     console.log("Error en la creación de la orden:", error.message);
     if (error.response) {
       // Manejar errores específicos de la respuesta
@@ -55,7 +48,7 @@ async function fetchProducts() {
   return JSON.parse(data);
 }
 
-export const getProducts = async (req, res) => {
+export const getProducts = async (req: Request, res: Response): Promise<any> => {
   try {
     const products = await fetchProducts();
     res.status(200).json(products);
@@ -65,7 +58,7 @@ export const getProducts = async (req, res) => {
   }
 };
 
-export const addProduct = async (req, res) => {
+export const addProduct = async (req: Request, res: Response): Promise<any> => {
   try {
     res.status(200).json(/* alguna respuesta basada en los productos */);
   } catch (error) {
@@ -87,7 +80,7 @@ export const addProduct = async (req, res) => {
   }
 };*/
 
-export const healthCheck = async (req, res) => {
+export const healthCheck = async (req: Request, res: Response): Promise<any> => {
   res.status(200).send("OK");
 };
 

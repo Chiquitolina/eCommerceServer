@@ -1,9 +1,6 @@
 import fs from "fs/promises";
-import { fileURLToPath } from "url";
 import path from "path";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { Request, Response } from 'express';
 
 const loadCategories = async () => {
   const productsPath = path.join(__dirname, "../data/categories.json");
@@ -11,7 +8,7 @@ const loadCategories = async () => {
   return JSON.parse(data);
 };
 
-export const getCategories = async (req, res) => {
+export const getCategories = async (req: Request, res: Response) : Promise<any> => {
   try {
     const categories = await loadCategories();
     res.status(200).json(categories);

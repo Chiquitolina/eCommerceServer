@@ -1,5 +1,5 @@
 import {  Router } from "express";
-import { sendEmail } from "../utils/emailsender.js";
+import { sendEmail } from "../../utils/emailsender";
 
 const emailRouter = Router()
 

@@ -1,5 +1,6 @@
 import { text } from "express";
 import nodemailer from "nodemailer";
+import { Request, Response } from 'express';
 
 let transporter = nodemailer.createTransport({
   service: "gmail",
@@ -9,7 +10,7 @@ let transporter = nodemailer.createTransport({
   },
 });
 
-export async function sendEmail(req, res) {
+export async function sendEmail(req: Request, res: Response) : Promise<any> {
   const { from, subject, mail } = req.body;
   console.log(req.body);
 
@@ -20,7 +21,7 @@ export async function sendEmail(req, res) {
     text: mail,
   };
 
-  transporter.sendMail(emailOpts, function (error, info) {
+  transporter.sendMail(emailOpts, function (error: any, info:any) {
     if (error) {
       console.log(error);
     } else {

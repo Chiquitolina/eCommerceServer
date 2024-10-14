@@ -1,28 +1,22 @@
-import express from "express";
-import { fileURLToPath } from "url";
+import express, { Response, Request } from "express";
 import path from "path";
 import morgan from "morgan";
-import router from "./routes/payment.route.js"; // Asegúrate de que estas rutas existen
-import authRouter from "./routes/auth.route.js";
-import productRouter from "./routes/product.route.js";
-import emailRouter from "./routes/email.route.js";
-import categoriesRouter from "./routes/categories.route.js";
+import authRouter from "./routes/auth.route";
+import router from "./routes/payment.route";
+import productRouter from "./routes/product.route";
+import emailRouter from "./routes/email.route";
+import categoriesRouter from "./routes/categories.route";
 import cors from "cors";
 
 const app = express();
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 const PORT = process.env.PORT || 3000;
 
 app.use(morgan("dev"));
 
 const corsOptions = {
-  origin: ['https://ecommerce-0028.onrender.com', 'http://localhost:4200'],
+  origin: ['https://ecommerce-0028.onrender.com', 'http://localhost:3000', 'http://localhost:4200'],
   methods: "GET,POST,PUT,DELETE,OPTIONS",
   allowedHeaders: "Content-Type,Authorization",
-  credentials: true, // Permite enviar credenciales
 };
 
 app.use(cors(corsOptions));
@@ -41,7 +35,7 @@ app.use(emailRouter);
 app.use(categoriesRouter);
 
 // Manejar rutas no encontradas
-app.get("*", (_, res) => {
+app.get("*", (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, "/public/index.html"));
 });
 

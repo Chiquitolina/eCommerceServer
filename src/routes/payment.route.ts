@@ -3,7 +3,7 @@ import {
   createOrder,
   getProducts,
   healthCheck,
-} from "../controllers/payment.controller.js";
+} from "../controllers/payment.controller.ts";
 
 const router = Router();
 
