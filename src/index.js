@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 3000;
 app.use(morgan("dev"));
 
 const corsOptions = {
-  origin: ['https://ecommerce-0028.onrender.com', 'http://localhost:4200'],
+  origin: ['https://ecommerce-0028.onrender.com', 'http://localhost:3000', 'http://localhost:4200'],
   methods: "GET,POST,PUT,DELETE,OPTIONS",
   allowedHeaders: "Content-Type,Authorization",
 };
