@@ -22,7 +22,6 @@ const corsOptions = {
   origin: ['https://ecommerce-0028.onrender.com', 'http://localhost:4200'],
   methods: "GET,POST,PUT,DELETE,OPTIONS",
   allowedHeaders: "Content-Type,Authorization",
-  credentials: true, // Permite enviar credenciales
 };
 
 app.use(cors(corsOptions));
