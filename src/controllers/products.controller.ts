@@ -103,7 +103,7 @@ export const getProducts = async (req: Request, res: Response): Promise<any> => 
     }
 
     // Responde con los productos filtrados
-    res.status(200).json(filteredProducts);
+      res.status(200).json(filteredProducts);
   } catch (error) {
     console.error(
       "Error al obtener productos por categoría/subcategoría:",

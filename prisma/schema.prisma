@@ -9,6 +9,62 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+model Category {
+  id           Int           @id @default(autoincrement())
+  name         String
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  subcategories Subcategory[]
+  products     Product[]      // Relación con productos
+}
+
+model Subcategory {
+  id          Int       @id @default(autoincrement())
+  name        String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  categoryId  Int
+  category    Category  @relation(fields: [categoryId], references: [id])
+  products    Product[] // Relación con productos
+}
+
+model MiniImage {
+  id        Int      @id @default(autoincrement())
+  url       String
+  productId Int
+  product   Product  @relation(fields: [productId], references: [id])
+}
+
+model Product {
+  id           Int          @id @default(autoincrement())
+  name         String
+  description  String
+  price        Float
+  discount     Int?
+  categoryId   Int
+  subcategoryId Int
+  category     Category     @relation(fields: [categoryId], references: [id])
+  subcategory  Subcategory  @relation(fields: [subcategoryId], references: [id])
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  currency     String
+  image        String
+  miniimgs    MiniImage[]
+  sizes        Json         // Guardar tamaños y cantidades como un objeto JSON
+}
+
+model View {
+  id           Int      @id @default(autoincrement())
+  resourceId   Int?      // El ID del recurso que fue visualizado (por ejemplo, un producto)
+  resourceType String?   // Tipo de recurso (ej., "Product", "Post")
+  userId       Int?     // ID del usuario que hizo la visualización (opcional)
+  ipAddress    String  // Dirección IP del visitante
+  location     Json    // Información geográfica (país, ciudad, región)
+  device       String?  // Tipo de dispositivo ("mobile", "desktop", "tablet")
+  browser      String?  // Navegador utilizado ("Chrome", "Firefox", etc.)
+  timestamp    DateTime @default(now())
 }

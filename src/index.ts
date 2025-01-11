@@ -7,8 +7,13 @@ import productRouter from "./routes/product.route";
 import emailRouter from "./routes/email.route";
 import categoriesRouter from "./routes/categories.route";
 import cors from "cors";
+import { appRouter } from "./config/appRouter";
+import * as trpcExpress from '@trpc/server/adapters/express';
+import { createContext } from "./config/tRCP";
 
 const app = express();
+app.set("trust proxy", true);
+
 const PORT = process.env.PORT || 3000;
 
 app.use(morgan("dev"));
@@ -24,6 +29,14 @@ app.options("*", cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(
+  '/trpc', // La ruta base donde estará tu API de tRPC
+  trpcExpress.createExpressMiddleware({
+    router: appRouter, // El router que has definido
+    createContext, // Si tienes un contexto, usa createContext
+  })
+);
 
 // Asegúrate de servir la carpeta 'public' correctamente
 app.use("/", express.static(path.join(__dirname, "/public")));
