@@ -10,6 +10,8 @@ import cors from "cors";
 import { appRouter } from "./config/appRouter";
 import * as trpcExpress from '@trpc/server/adapters/express';
 import { createContext } from "./config/tRCP";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 app.set("trust proxy", true);
