@@ -2,6 +2,7 @@
   {
     "id": 1,
     "name": "hombre",
+    "icon": "male",
     "subcategories": [
       {
         "id": 100,
@@ -45,6 +46,7 @@
   {
     "id": 2,
     "name": "mujer",
+    "icon": "female",
     "subcategories": [
       {
         "id": 200,
@@ -83,6 +85,7 @@
   {
     "id": 3,
     "name": "niños",
+    "icon": "child_care",
     "subcategories": [
       {
         "id": 300,
@@ -121,6 +124,7 @@
   {
     "id": 4,
     "name": "accesorios",
+    "icon": "shopping_bag",
     "subcategories": [
       {
         "id": 400,
@@ -147,6 +151,7 @@
   {
     "id": 5,
     "name": "oportunidades",
+    "icon": "sell",
     "subcategories": [
       {
         "id": 500,
